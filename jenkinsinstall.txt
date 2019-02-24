@@ -1,42 +1,43 @@
-Install Jenkins on AWS EC2 instance 
-yum install java
-yum load-transaction /tmp/yum_save_tx.2019-02-23.07-01.Xfwkp9.yumtx
-yum -y install java-1.8.0-openjdk
-java -version
-find /usr/lib/jvm/java-1.8* | head -n 3
-#edit file 
-vi .bash_proile
-#JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.x86_64
-export JAVA_HOME
-PATH=$PATH:$JAVA_HOME :$HOME/bin
-# To set it permanently update your .bash_profile
-:wq
-Install Jenkins
-yum -y install wget
-wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
-rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
-yum -y install jenkins
 
-#Start Jenkins
-systemctl start jenkins
-systemctl enable jenkins
-#Accessing Jenkins via By default jenkins runs at port 8080, You can access jenkins at
-http://YOUR-SERVER-PUBLIC-IP:8080
-#Configure Jenkins
-The default Username is admin
-Grab the default password
-Password Location:/var/lib/jenkins/secrets/initialAdminPassword
-Skip Plugin Installation; We can do it later
-Change admin password
-Admin > Configure > Password
-Configure java path
-Manage Jenkins > Global Tool Configuration > JDK
-Create another admin user id
-#Test Jenkins Jobs
-Create “new item”
-Enter an item name – My-First-Project
-Chose Freestyle project
-Under Build section Execute shell : echo "Welcome to Jenkins Demo"
-Save your job
-Build job
-Check "console output"
+#Create user and groups   and Manage $ Assign Roles
+step 1: Jenkins Dashboard then go to Manage Jenkins ---->Manage User 
+ under Manage user, u have to find @create user
+enter: User name
+	password
+	conirm passwd
+	full NAme
+	e.maill adderss
+create user .
+
+#How to give configure Global security(dev guy only access dev dashboard)
+THIS PROCESS WE NEED A Plugin 	      (test guy only access test dashboard)
+go to ---->managr plugins need to search--> Role-based select and 
+click -->install and restart
+ now u can go to configure global security 
+then find ROLe-based strategy and select it
+
+click--> Apply and save  then it will reflect instantly in Jenkins users roles 
+#How to set MAnage And Assign Roles
+here 3 types are:
+	Manage Role
+	Assign Roles
+	Role Strategy macros
+#Manage Role
+# 3 Types
+    --->Global Roles
+	add Employee nd all user called employee
+  --->	Project Roles(groups)
+	all Dev and tester user
+   --->	Slave Roles 
+
+Apply and save,
+
+###Assign User Role
+3 types
+Global Roles
+--> we have to add all user and all user is an employee then click emp box.
+Item Roles
+---> add the user based on dev or tester
+Node Roles
+---> users and groups
+###now u can able to access oly dev role
