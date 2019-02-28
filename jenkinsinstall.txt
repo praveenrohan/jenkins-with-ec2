@@ -1,3 +1,45 @@
+Install Jenkins on AWS EC2 instance 
+yum install java
+yum load-transaction /tmp/yum_save_tx.2019-02-23.07-01.Xfwkp9.yumtx
+yum -y install java-1.8.0-openjdk
+java -version
+find /usr/lib/jvm/java-1.8* | head -n 3
+#edit file 
+vi .bash_proile
+#JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.x86_64
+export JAVA_HOME
+PATH=$PATH:$JAVA_HOME :$HOME/bin
+# To set it permanently update your .bash_profile
+:wq
+Install Jenkins
+yum -y install wget
+wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+yum -y install jenkins
+
+#Start Jenkins
+systemctl start jenkins
+systemctl enable jenkins
+#Accessing Jenkins via By default jenkins runs at port 8080, You can access jenkins at
+http://YOUR-SERVER-PUBLIC-IP:8080
+#Configure Jenkins
+The default Username is admin
+Grab the default password
+Password Location:/var/lib/jenkins/secrets/initialAdminPassword
+Skip Plugin Installation; We can do it later
+Change admin password
+Admin > Configure > Password
+Configure java path
+Manage Jenkins > Global Tool Configuration > JDK
+Create another admin user id
+#Test Jenkins Jobs
+Create “new item”
+Enter an item name – My-First-Project
+Chose Freestyle project
+Under Build section Execute shell : echo "Welcome to Jenkins Demo"
+Save your job
+Build job
+Check "console output"
 
 #Create user and groups   and Manage $ Assign Roles
 step 1: Jenkins Dashboard then go to Manage Jenkins ---->Manage User 
@@ -29,6 +71,31 @@ here 3 types are:
   --->	Project Roles(groups)
 	all Dev and tester user
    --->	Slave Roles 
+
+###how to secure in jenkins server
+1) change the default admin passwd
+2) remove the admin password from cmd line in jenkins server 
+   ---->>>/var/lib/jenkins
+ 	ls -l secrets 
+	remove the initialAdminpassword
+	rm ./secrets/initialAdminpasswd
+3)you have to enable in global conigure setting and project basd matrix auth
+    check to global config then enable security
+save and apply
+4) ssh Disable 
+we have to check ssh port enable 
+###securing jenkins server
+
+###How install plugins and diff services in manage plugins
+
+using manage 1st u have check install plugins then u have go with under avalabile plugins 
+based on the requiredments    
+blue ball
+blue ocen
+monitoring 
+git client
+github
+
 
 Apply and save,
 
